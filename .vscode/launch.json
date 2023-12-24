@@ -1,0 +1,31 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run selected Ruby file",
+      "program": "ruby ${file}",
+      "request": "launch",
+      "type": "ruby_lsp"
+    },
+    {
+      "name": "Attach rdebug-ide",
+      "request": "attach",
+      "type": "ruby_lsp",
+    },
+    {
+      "name": "RSpec - active spec file only",
+      "program": "binstub/rspec -I ${workspaceRoot} ${file}",
+      "request": "launch",
+      "type": "ruby_lsp",
+    },
+    {
+      "name": "RSpec - all",
+      "program": "${workspaceRoot}/binstub/rspec -I ${workspaceRoot}",
+      "request": "launch",
+      "type": "ruby_lsp",
+    }
+  ]
+}
