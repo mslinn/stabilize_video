@@ -5,6 +5,8 @@ Dir[File.join(__dir__, '*.rb')].each do |file|
   require file unless file.end_with?('/stabilize_video.rb')
 end
 
-video_in = ARGV[0]
-video_out = "stabilized_#{video_in}"
-StablizeVideo.new(video_in, video_out).stabilize
+if __FILE__ == $PROGRAM_NAME
+  video_in = ARGV[0]
+  video_out = "stabilized_#{video_in}"
+  StablizeVideo.new(video_in, video_out).stabilize
+end

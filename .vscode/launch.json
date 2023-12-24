@@ -5,6 +5,15 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "args": [ "--help" ],
+      "debugPort": "0",
+      "name": "Invoke stabilize gem",
+      "script": "${workspaceRoot}/exe/stabilize",
+      "request": "launch",
+      "type": "rdbg",
+      "useBundler": true,
+    },
+    {
       "args": [ "demo.mp4" ],
       "debugPort": "0",
       "name": "Run stabilize_video.rb",

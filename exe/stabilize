@@ -1,0 +1,27 @@
+#!/usr/bin/env ruby
+
+require 'colorator'
+require 'stabilize_video'
+
+def help(msg=nil)
+  printf "Error: #{msg}\n\n".yellow unless msg.nil?
+  msg = <<~END_HELP
+    stabilize: Stabilizes a video using FFmpeg's vidstabdetect and vidstabtransform filters.
+
+    Syntax: stabilize PATH_TO_VIDEO
+
+    See:
+      https://www.ffmpeg.org/ffmpeg-filters.html#vidstabdetect-1
+      https://www.ffmpeg.org/ffmpeg-filters.html#toc-vidstabtransform-1
+  END_HELP
+  printf msg.cyan
+  exit 1
+end
+
+help 'Video file name must be provided.' if ARGV.empty?
+help if ARGV[0] == '-h' || ARGV[0] == '--help'
+
+video_in = ARGV[0]
+video_out = "stabilized_#{video_in}"
+stabilize_video = StablizeVideo.new(video_in, video_out)
+stabilize_video.stabilize

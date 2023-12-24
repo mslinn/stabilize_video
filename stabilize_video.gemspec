@@ -4,11 +4,10 @@ Gem::Specification.new do |spec|
   host = 'https://github.com/mslinn/stabilize_video'
 
   spec.authors               = ['Mike Slinn']
-  spec.bindir                = 'binstub'
-  spec.executables           = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
+  spec.bindir                = 'exe'
+  spec.executables           = ['stabilize']
   spec.description           = <<~END_DESC
-    Write a longer description of the gem.
-    Use as many lines as you like.
+    Stabilizes a video using FFmpeg's vidstabdetect and vidstabtransform filters.
   END_DESC
   spec.email                 = ['mslinn@mslinn.com']
   spec.files                 = Dir['.rubocop.yml', 'LICENSE.*', 'Rakefile', '{lib,spec}/**/*', '*.gemspec', '*.md']
@@ -29,7 +28,7 @@ Gem::Specification.new do |spec|
   END_MESSAGE
   spec.require_paths         = ['lib']
   spec.required_ruby_version = '>= 3.1.0'
-  spec.summary               = 'Write summary of what the gem is for'
+  spec.summary               = 'Stabilizes a video using FFmpeg\'s vidstabdetect and vidstabtransform filters.'
   spec.version               = StabilizeVideo::VERSION
   spec.add_dependency 'colorator', '~> 1.1'
   spec.add_dependency 'thor', '~> 1.2.2'
