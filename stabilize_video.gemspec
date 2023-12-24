@@ -31,5 +31,4 @@ Gem::Specification.new do |spec|
   spec.summary               = 'Stabilizes a video using FFmpeg\'s vidstabdetect and vidstabtransform filters.'
   spec.version               = StabilizeVideo::VERSION
   spec.add_dependency 'colorator', '~> 1.1'
-  spec.add_dependency 'thor', '~> 1.2.2'
 end

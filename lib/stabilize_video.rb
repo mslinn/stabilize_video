@@ -7,6 +7,6 @@ end
 
 if __FILE__ == $PROGRAM_NAME
   video_in = ARGV[0]
-  video_out = "stabilized_#{video_in}"
+  video_out = "#{File.dirname video_in}/stabilized_#{File.basename video_in}"
   StablizeVideo.new(video_in, video_out).stabilize
 end

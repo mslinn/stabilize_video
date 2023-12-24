@@ -5,6 +5,7 @@ require 'fileutils'
 require 'optparse'
 require 'tempfile'
 require_relative 'run'
+require_relative 'msutil'
 
 # Ffmpeg's `deshake` filter can be used for a single-pass shake removal.
 # This script does not do that.
@@ -48,19 +49,30 @@ require_relative 'run'
 class StablizeVideo
   SUPPRESS_OUTPUT = '-f null -'.freeze
 
+  include MSUtil
   include Run
 
   def initialize(video_in, video_out)
-    @shake = 5 # Medium shakiness
+    @shake     = 5 # Medium shakiness
     @shakiness = "shakiness=#{@shake.clamp(1, 10)}"
-    @video_in = video_in
-    @video_out = video_out
+    @video_in  = MSUtil.expand_env video_in
+    @video_out = MSUtil.expand_env video_out
+    unless File.exist? @video_in
+      printf "Error: #{@video_in} does not exist.\n"
+      exit 2
+    end
+    unless File.readable? @video_in
+      printf "Error: #{@video_in} cannot be read.\n"
+      exit 2
+    end
+    return unless File.exist? @video_out
 
-    @input = "-i #{@video_in}"
+    printf "Error: #{@video_in} already exists.\n"
+    exit 3
   end
 
   def stabilize
-    smooth = compute_smoothing @input
+    smooth = compute_smoothing
     Tempfile.open('transforms', '/tmp') do |fio|
       analyze_video(@shakiness, fio.path)
       smooth(@input, smooth, fio.path)
@@ -72,7 +84,10 @@ class StablizeVideo
   # Analyze a video and store results in temporary file
   def analyze_video(shakiness, path)
     tx_path = "result=#{path}"
-    run "ffmpeg #{@input} -vf vidstabdetect=#{shakiness}:#{tx_path} #{SUPPRESS_OUTPUT}"
+    command = <<~END_CMD
+      ffmpeg -i "#{@input}" -vf vidstabdetect=#{shakiness}:#{tx_path} #{SUPPRESS_OUTPUT}
+    END_CMD
+    run command
   end
 
   # From https://stackoverflow.com/a/72129067
@@ -134,18 +149,22 @@ class StablizeVideo
 
   # Perform stage 1
   # fps / 2 yields smoothing value
-  def compute_smoothing(input)
-    command = "ffprobe -v error -select_streams v:0 -show_entries stream=avg_frame_rate -of default=nw=1:nk=1 #{input}"
+  def compute_smoothing
+    command = <<~END_CMD
+      ffprobe -v error -select_streams v:0 -show_entries stream=avg_frame_rate -of default=nw=1:nk=1 -i "#{@video_in}"
+    END_CMD
     fraction = run_capture_stdout(command).first
 
     result = calculate "#{fraction}/2"
     "smoothing=#{result.to_i}"
   end
 
-  # Perform stage 2
-  def smooth(input, smooth, path)
-    # Stage 2 (vidstabtransform filter)
+  # Perform stage 2 (vidstabtransform filter)
+  def smooth(_input, smooth, path)
     tx_path = "input=#{path}"
-    run "ffmpeg #{input} -vf vidstabtransform=#{smooth}:zoom=5:#{tx_path} #{@video_out}"
+    command = <<~END_CMD
+      ffmpeg -i "#{@video_in}" -vf vidstabtransform=#{smooth}:zoom=5:#{tx_path} "#{@video_out}"
+    END_CMD
+    run command
   end
 end
