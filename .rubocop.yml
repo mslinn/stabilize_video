@@ -25,6 +25,9 @@ Layout/HashAlignment:
 Layout/LineLength:
   Max: 150
 
+Layout/MultilineArrayBraceLayout:
+  EnforcedStyle: new_line
+
 Metrics/AbcSize:
   Max: 35
 
