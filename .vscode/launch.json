@@ -5,7 +5,7 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "args": [ "$staging/2022-12-17 a.mp4" ],
+      "args": [ "test.mp4" ],
       "debugPort": "0",
       "name": "Invoke stabilize gem",
       "script": "${workspaceRoot}/exe/stabilize",

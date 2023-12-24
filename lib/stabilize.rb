@@ -85,7 +85,7 @@ class StablizeVideo
   def analyze_video(shakiness, path)
     tx_path = "result=#{path}"
     command = <<~END_CMD
-      ffmpeg -i "#{@input}" -vf vidstabdetect=#{shakiness}:#{tx_path} #{SUPPRESS_OUTPUT}
+      ffmpeg -i "#{@video_in}" -vf vidstabdetect=#{shakiness}:#{tx_path} #{SUPPRESS_OUTPUT}
     END_CMD
     run command
   end
