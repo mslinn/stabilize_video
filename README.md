@@ -1,17 +1,38 @@
 # `Stabilize_video` [![Gem Version](https://badge.fury.io/rb/stabilize_video.svg)](https://badge.fury.io/rb/stabilize_video)
 
-Description of StabilizeVideo
+`StabilizeVideo` provides the `stabilize` command, which uses `FFmpeg` to improve shakey videos.
+Provided as a Ruby Gem, `StabilizeVideo` exposes an API which can be invoked from other programs.
 
 
 ## Installation
 
-Either add this line to your application&rsquo;s `Gemfile`:
+To use the `stabilize` command from a console, type:
+
+```shell
+$ gem install stabilize_video
+```
+
+
+### For a Ruby Program
+
+If you would like to use the API from your Ruby program,
+add the following line to your application&rsquo;s `Gemfile`:
 
 ```ruby
 gem 'stabilize_video'
 ```
 
-... or add the following to your application&rsquo;s `.gemspec`:
+And then execute:
+
+```shell
+$ bundle
+```
+
+
+### For a Ruby Gem
+
+If you would like to use the API from your Ruby gem,
+ add the following to your gem&rsquo;s `.gemspec`:
 
 ```ruby
 spec.add_dependency 'stabilize_video'
@@ -26,7 +47,29 @@ $ bundle
 
 ## Usage
 
-Describe how to use this gem
+This is the help message:
+
+```shell
+$ stabilize -h
+stabilize: Stabilizes a video using FFmpeg's vidstabdetect and vidstabtransform filters.
+
+Syntax: stabilize PATH_TO_VIDEO
+
+stabilize: Stabilizes a video using FFmpeg's vidstabdetect and vidstabtransform filters.
+
+Syntax: stabilize [Options] PATH_TO_VIDEO
+
+Options:
+  -f Overwrite output file if present
+  -h Show this help message
+  -s Shakiness compensation 1..10 (default 5)
+  -v Verbosity; one of: trace, debug, verbose, info, warning, error, fatal, panic, quiet
+  -z Zoom percentage (computed if not specified)
+
+See:
+  https://www.ffmpeg.org/ffmpeg-filters.html#vidstabdetect-1
+  https://www.ffmpeg.org/ffmpeg-filters.html#toc-vidstabtransform-1
+```
 
 
 ## Development
