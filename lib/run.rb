@@ -4,7 +4,7 @@ module Run
   # @return true if the command succeeded
   def run(command)
     # printf "Run #{command}\n".yellow
-    $stdout.sync = true
+    # $stdout.sync = true
     system(*command)
   end
 
