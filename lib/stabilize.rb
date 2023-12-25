@@ -67,7 +67,7 @@ class StablizeVideo
       printf "Error: #{@video_in} cannot be read.\n"
       exit 2
     end
-    return unless File.exist?(@video_out) && !@options.key?(:overwrite)
+    return unless File.exist?(@video_out) && !options.key?(:overwrite)
 
     printf "Error: #{@video_out} already exists.\n"
     exit 3
