@@ -54,12 +54,12 @@ class StablizeVideo
   include MSUtil
   include Run
 
-  def initialize(video_in, video_out)
-    @shake     = 5 # Medium shakiness
-    @shakiness = "shakiness=#{@shake.clamp(1, 10)}"
+  def initialize(video_in, video_out, **options)
+    @options   = options
+    @shakiness = "shakiness=#{options[:shake]}"
     @video_in  = MSUtil.expand_env video_in
     @video_out = MSUtil.expand_env video_out
-    unless File.exist? @video_in
+    unless File.exist?(@video_in) && !@options.key?(:overwrite)
       printf "Error: #{@video_in} does not exist.\n"
       exit 2
     end
@@ -108,7 +108,7 @@ class StablizeVideo
   def smooth(_input, smooth, path)
     tx_path = "input=#{path}"
     command = <<~END_CMD
-      ffmpeg -i "#{@video_in}" -vf vidstabtransform=#{smooth}:zoom=5:#{tx_path} "#{@video_out}"
+      ffmpeg -yi "#{@video_in}" -vf vidstabtransform=#{smooth}:zoom=5:#{tx_path} "#{@video_out}"
     END_CMD
     run command
   end

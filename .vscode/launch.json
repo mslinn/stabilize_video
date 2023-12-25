@@ -5,7 +5,7 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "args": [ "test.mp4" ],
+      "args": [ "-f", "test.mp4" ],
       "debugPort": "0",
       "name": "Invoke stabilize gem",
       "script": "${workspaceRoot}/exe/stabilize",
@@ -14,7 +14,7 @@
       "useBundler": true,
     },
     {
-      "args": [ "demo.mp4" ],
+      "args": [ "-f", "demo.mp4" ],
       "debugPort": "0",
       "name": "Run stabilize_video.rb",
       "script": "${workspaceRoot}/lib/stabilize_video.rb",
