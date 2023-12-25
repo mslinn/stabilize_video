@@ -39,6 +39,7 @@ def parse_options
     parser.on('-h', '--help', 'Display help') do
       help
     end
+    parser.on('-l', '--loglevel LOGLEVEL', Integer, "Logging level (#{VERBOSITY.join ', '})")
     parser.on('-s', '--shake SHAKE', Integer, 'Shakiness (1..10)')
     parser.on('-v', '--verbose VERBOSE', 'Zoom percentage')
     parser.on('-z', '--zoom ZOOM', Integer, 'Zoom percentage')
@@ -48,7 +49,7 @@ def parse_options
       exit
     end
   end.parse!(into: options)
-  help "Invalid verbosity value (#{options[:verbose]}), must be one of one of: #{VERBOSITY.join ', '}." unless options[:verbose] in VERBOSITY
+  help "Invalid verbosity value (#{options[:verbose]}), must be one of one of: #{VERBOSITY.join ', '}." if options[:verbose] && !options[:verbose] in VERBOSITY
   help "Invalid shake value (#{options[:shake]})." if options[:shake].negative? || options[:shake] > 10
   options
 end
