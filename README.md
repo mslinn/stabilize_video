@@ -51,11 +51,7 @@ This is the help message:
 
 ```shell
 $ stabilize -h
-stabilize: Stabilizes a video using FFmpeg's vidstabdetect and vidstabtransform filters.
-
-Syntax: stabilize PATH_TO_VIDEO
-
-stabilize: Stabilizes a video using FFmpeg's vidstabdetect and vidstabtransform filters.
+stabilize: Stabilizes a video using the FFmpeg vidstabdetect and vidstabtransform filters.
 
 Syntax: stabilize [Options] PATH_TO_VIDEO
 
