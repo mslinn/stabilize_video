@@ -1,5 +1,3 @@
-#!/usr/bin/env ruby
-
 require 'colorator'
 require 'fileutils'
 require 'optparse'
