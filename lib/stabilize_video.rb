@@ -8,12 +8,12 @@ Dir[File.join(__dir__, '*.rb')].each do |file|
 end
 
 def main
-  help 'Video file name must be provided.' if ARGV.empty?
-  help 'Too many parameters specified.' if ARGV.length > 1
   options = parse_options
+  help 'Video file name must be provided.' if ARGV.empty?
+  help "Too many parameters specified.\n#{ARGV}" if ARGV.length > 1
   video_in = ARGV[0]
   video_out = "#{File.dirname video_in}/stabilized_#{File.basename video_in}"
-  StablizeVideo.new(video_in, video_out, options).stabilize
+  StablizeVideo.new(video_in, video_out, **options).stabilize
 end
 
 main

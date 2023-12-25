@@ -56,20 +56,22 @@ class StablizeVideo
 
   def initialize(video_in, video_out, **options)
     @options   = options
+    @loglevel  = "-loglevel #{options[:loglevel]}"
+    @loglevel += ' -stats' unless options[:loglevel] == 'quiet'
     @shakiness = "shakiness=#{options[:shake]}"
     @video_in  = MSUtil.expand_env video_in
     @video_out = MSUtil.expand_env video_out
-    unless File.exist?(@video_in) && !@options.key?(:overwrite)
-      printf "Error: #{@video_in} does not exist.\n"
+    unless File.exist?(@video_in)
+      printf "Error: file #{@video_in} does not exist.\n"
       exit 2
     end
     unless File.readable? @video_in
       printf "Error: #{@video_in} cannot be read.\n"
       exit 2
     end
-    return unless File.exist? @video_out
+    return unless File.exist?(@video_out) && !@options.key?(:overwrite)
 
-    printf "Error: #{@video_in} already exists.\n"
+    printf "Error: #{@video_out} already exists.\n"
     exit 3
   end
 
@@ -87,7 +89,7 @@ class StablizeVideo
   def analyze_video(shakiness, path)
     tx_path = "result=#{path}"
     command = <<~END_CMD
-      ffmpeg -i "#{@video_in}" -vf vidstabdetect=#{shakiness}:#{tx_path} #{SUPPRESS_OUTPUT}
+      ffmpeg #{@loglevel} -i "#{@video_in}" -vf vidstabdetect=#{shakiness}:#{tx_path} #{SUPPRESS_OUTPUT}
     END_CMD
     run command
   end
@@ -108,7 +110,7 @@ class StablizeVideo
   def smooth(_input, smooth, path)
     tx_path = "input=#{path}"
     command = <<~END_CMD
-      ffmpeg -yi "#{@video_in}" -vf vidstabtransform=#{smooth}:zoom=5:#{tx_path} "#{@video_out}"
+      ffmpeg -y #{@loglevel} -i "#{@video_in}" -vf vidstabtransform=#{smooth}:zoom=5:#{tx_path} "#{@video_out}"
     END_CMD
     run command
   end

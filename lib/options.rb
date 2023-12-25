@@ -16,6 +16,7 @@ def help(msg = nil)
       -f Overwrite output file if present
       -h Show this help message
       -s Shakiness compensation 1..10 (default 5)
+      -v Verbosity -loglevel error -stats
       -z Zoom percentage (computed if not specified)
 
     See:
@@ -27,7 +28,7 @@ def help(msg = nil)
 end
 
 def parse_options
-  options = { shake: 5 }
+  options = { shake: 5, loglevel: 'warning' }
   OptionParser.new do |parser|
     parser.program_name = File.basename __FILE__
     @parser = parser
