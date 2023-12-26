@@ -32,17 +32,13 @@ def parse_options
     @parser = parser
 
     parser.on('-f', '--overwrite', 'Overwrite output file if present')
-    parser.on('-h', '--help', 'Display help') do
-      help
-    end
     parser.on('-l', '--loglevel LOGLEVEL', Integer, "Logging level (#{VERBOSITY.join ', '})")
     parser.on('-s', '--shake SHAKE', Integer, 'Shakiness (1..10)')
     parser.on('-v', '--verbose VERBOSE', 'Zoom percentage')
     parser.on('-z', '--zoom ZOOM', Integer, 'Zoom percentage')
 
     parser.on_tail('-h', '--help', 'Show this message') do
-      puts parser.to_s.cyan
-      exit
+      help
     end
   end.parse!(into: options)
   help "Invalid verbosity value (#{options[:verbose]}), must be one of one of: #{VERBOSITY.join ', '}." if options[:verbose] && !options[:verbose] in VERBOSITY
