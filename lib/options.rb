@@ -40,7 +40,7 @@ def parse_options
     parser.on_tail('-h', '--help', 'Show this message') do
       help
     end
-  end.parse!(into: options)
+  end.order!(into: options)
   help "Invalid verbosity value (#{options[:verbose]}), must be one of one of: #{VERBOSITY.join ', '}." if options[:verbose] && !options[:verbose] in VERBOSITY
   help "Invalid shake value (#{options[:shake]})." if options[:shake].negative? || options[:shake] > 10
   options
