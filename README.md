@@ -6,11 +6,21 @@ Provided as a Ruby Gem, `StabilizeVideo` exposes an API which can be invoked fro
 
 ## Installation
 
-To use the `stabilize` command from a console, type:
+Set up Ruby [(here is how)](https://www.mslinn.com/ruby/1000-ruby-setup.html),
+then type the following at a shell prompt:
+
 
 ```shell
 $ gem install stabilize_video
 ```
+
+If you are running `rbenv` (and you should, according to the instructions mentioned above), type:
+
+```shell
+$ rbenv rehash
+```
+
+The  `stabilize` command should now be available.
 
 
 ### For a Ruby Program
