@@ -20,8 +20,9 @@ Gem::Specification.new do |spec|
     'homepage_uri'      => spec.homepage,
     'source_code_uri'   => host,
   }
-  spec.name                 = 'stabilize_video'
-  spec.post_install_message = <<~END_MESSAGE
+  spec.name                  = 'stabilize_video'
+  spec.platform              = Gem::Platform::RUBY
+  spec.post_install_message  = <<~END_MESSAGE
 
     Thanks for installing #{spec.name}!
 
